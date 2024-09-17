@@ -1,0 +1,18 @@
+<div class="courses-panel">
+  <h1>All Courses</h1>
+  <mat-tab-group>
+    <mat-tab label="Beginner">
+      @for (course of (beginnerCourses$ | async); track course.id) {
+        <app-course-card [course]="course" (coursesChanged)="loadAllCourses()"></app-course-card>
+      }
+    </mat-tab>
+    <mat-tab label="Advanced">
+      <ng-template mat-tab-label>
+        Advanced
+      </ng-template>
+      @for (course of (advancedCourses$ | async); track course.id) {
+        <app-course-card [course]="course" (coursesChanged)="loadAllCourses()"></app-course-card>
+      }
+    </mat-tab>
+  </mat-tab-group>
+</div>

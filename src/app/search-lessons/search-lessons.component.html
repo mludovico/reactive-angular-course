@@ -1,0 +1,39 @@
+<div class="course">
+  <h2>Search All Lessons</h2>
+  <mat-form-field class="search-bar">
+    <input matInput placeholder="Type your search" #searchInput autocomplete="off">
+  </mat-form-field>
+
+  <button class="search" mat-raised-button color="primary" (click)="onSearch(searchInput.value)">
+    <mat-icon>search</mat-icon>
+    Search
+  </button>
+  @if (!activeLesson) {
+    @if (searchResults$ | async; as results) {
+      <table class="lessons-table mat-elevation-z7">
+        <thead>
+        <th>#</th>
+        <th>Description</th>
+        <th>Duration</th>
+        </thead>
+        <tbody>
+          @for (result of results; track result.id) {
+            <tr class="lesson-row" (click)="openLesson(result)">
+              <td class="seqno-cell">{{ result.seqNo }}</td>
+              <td class="description-cell">{{ result.description }}</td>
+              <td class="duration-cell">{{ result.duration }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  } @else {
+    <div class="lesson-detail">
+      <button mat-raised-button color="primary" class="back-btn" (click)="closeLesson()">
+        <mat-icon>arrow_back_ios</mat-icon>
+        Back to Search
+      </button>
+      <app-lesson-detail [lesson]="activeLesson"></app-lesson-detail>
+    </div>
+  }
+</div>
